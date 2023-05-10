@@ -1,12 +1,12 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
 import { DataSource } from "typeorm"
-import  Tasks  from "./entity/tasks"
+import  Tasks  from "./entity/Tasks"
 import routes from "./routes"
 
 const app = express()
 //aplicaçao vai trabalhar com json
-
+app.use(bodyParser.json())
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -22,15 +22,8 @@ export const AppDataSource = new DataSource({
     subscribers: [],
 })
 
-AppDataSource.initialize()
-    .then(() => {
-        console.log("Data Source has been initialized!")
-    })
-    .catch((err) => {
-        console.error("Error during Data Source initialization", err)
-    })
 
-app.use(bodyParser.json())
+
 //aplicação receba as rotas 
 app.use(routes)
 //porta que a aplicação vai rodar 
